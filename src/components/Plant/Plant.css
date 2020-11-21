@@ -1,0 +1,64 @@
+@keyframes sun-animation {
+    0% {
+      transform: rotateZ(0);
+    }
+    100% {
+      transform: rotateZ(360deg);
+    }
+}
+@keyframes sun-animation-2 {
+    0% {
+      transform: rotateZ(0);
+    }
+    100% {
+      transform: rotateZ(-360deg);
+    }
+}
+
+.sun {
+    width: 60px;
+    height: 60px;
+    background-color: yellow;
+    animation-name: sun-animation;
+    animation-duration: 10s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    border-radius: 50%;
+    position: absolute;
+    left: 50px;
+    top: 150px;
+}
+.sun-tri {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 20px solid orange;
+    width: 0;
+    height: 0;
+}
+.sun-tri.top {
+    transform: translate(100%,-125%);
+}
+.sun-tri.bottom {
+    transform: translate(100%,325%) rotate(180deg);
+}
+.sun-tri.left {
+    transform: translate(-125%,100%) rotate(270deg);
+}
+.sun-tri.right {
+    transform: translate(325%,100%) rotate(90deg);
+}
+.sun-tri.top-right {
+    transform: translate(260%,-60%) rotate(45deg);
+}
+.sun-tri.top-left {
+    transform: translate(-60%,-60%) rotate(-45deg);
+}
+.sun-tri.bottom-left {
+    transform: translate(-60%,260%) rotate(225deg);
+}
+.sun-tri.bottom-right {
+    transform: translate(260%,260%) rotate(135deg);
+}
