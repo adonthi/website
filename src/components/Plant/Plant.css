@@ -56,3 +56,12 @@
 .sun-tri.bottom-right {
     transform: translate(260%,260%) rotate(135deg);
 }
+.moon {
+    position: absolute;
+    height: 70px;
+    width: 70px;
+    box-shadow: -19px 15px 0 5px white;
+    border-radius: 50%; 
+    left: 60px;
+    top: 130px;
+}

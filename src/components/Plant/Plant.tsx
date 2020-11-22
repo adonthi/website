@@ -11,56 +11,69 @@ enum BackgroundColor {
   Night = '#0c1445',
 }
 
-function getSunTimes(): suncalc.GetTimesResult {
-  let latitude = 35.7796;
-  let longitude = -78.6382;
-  const now = new Date();
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition((position) => {
-      latitude = position.coords.latitude;
-      longitude = position.coords.longitude;
-    });
-  }
-  return suncalc.getTimes(now, latitude, longitude);
-}
-
-function getBackgroundColor() {
-  const sunTimes = getSunTimes();
-  const now = new Date();
-  if (now < sunTimes.sunrise) {
-    return BackgroundColor.Night;
-  } if (now < sunTimes.sunriseEnd) {
-    return BackgroundColor.Sunrise;
-  } if (now < sunTimes.solarNoon) {
-    return BackgroundColor.Morning;
-  } if (now < sunTimes.sunsetStart) {
-    return BackgroundColor.Midday;
-  } if (now < sunTimes.sunset) {
-    return BackgroundColor.Sunset;
-  }
-  return BackgroundColor.Night;
-}
-
-const BodyDiv = styled.div`
-background-color: ${getBackgroundColor()}
-`;
-
 type PlantState = {
-  isDay: boolean;
+  sunTimes: suncalc.GetTimesResult;
 };
 
 class Plant extends React.Component<{}, PlantState> {
+  BodyDiv = styled.div`
+  background-color: ${Plant.getBackgroundColor()}
+  `;
+
   constructor(props: any) {
     super(props);
     this.state = {
-      isDay: new Date() < getSunTimes().sunset,
+      sunTimes: Plant.getSunTimes(),
     };
   }
 
+  static getSunTimes() {
+    let latitude = 35.7796;
+    let longitude = -78.6382;
+    const now = new Date();
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        latitude = position.coords.latitude;
+        longitude = position.coords.longitude;
+      });
+    }
+    return suncalc.getTimes(now, latitude, longitude);
+  }
+
+  static getBackgroundColor() {
+    const sunTimes = Plant.getSunTimes();
+    const now = new Date();
+    if (now < sunTimes.sunrise) {
+      return BackgroundColor.Night;
+    } if (now < sunTimes.sunriseEnd) {
+      return BackgroundColor.Sunrise;
+    } if (now < sunTimes.solarNoon) {
+      return BackgroundColor.Morning;
+    } if (now < sunTimes.sunsetStart) {
+      return BackgroundColor.Midday;
+    } if (now < sunTimes.sunset) {
+      return BackgroundColor.Sunset;
+    }
+    return BackgroundColor.Night;
+  }
+
   render() {
-    const { isDay } = this.state;
+    const { sunTimes } = this.state;
+    const now = new Date();
+    const isDay = now < sunTimes.sunset;
+    const isMorning = now < sunTimes.solarNoon && now > sunTimes.sunrise;
+    let welcomePhrase: string;
+    if (isDay) {
+      if (isMorning) {
+        welcomePhrase = 'Good morning!';
+      } else {
+        welcomePhrase = 'Hello!';
+      }
+    } else {
+      welcomePhrase = 'Good evening.';
+    }
     return (
-      <BodyDiv className="plant-body">
+      <this.BodyDiv className="plant-body">
         <h1>Plant</h1>
         {isDay ? (
           <div className="sun">
@@ -68,11 +81,10 @@ class Plant extends React.Component<{}, PlantState> {
               .map((direction) => <div className={`sun-tri ${direction}`} />)}
           </div>
         ) : (
-          <div className="moon">
-            <p>hey im the moon</p>
-          </div>
+          <div className="moon" />
         )}
-      </BodyDiv>
+        <h2>{welcomePhrase}</h2>
+      </this.BodyDiv>
     );
   }
 }
