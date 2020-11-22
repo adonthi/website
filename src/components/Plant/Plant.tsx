@@ -83,7 +83,7 @@ class Plant extends React.Component<{}, PlantState> {
         ) : (
           <div className="moon" />
         )}
-        <h2>{welcomePhrase}</h2>
+        <h2 className="welcome-phrase">{welcomePhrase}</h2>
       </this.BodyDiv>
     );
   }
