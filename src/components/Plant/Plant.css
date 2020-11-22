@@ -1,3 +1,6 @@
+.plant-body {
+    height: 100vh;
+}
 @keyframes sun-animation {
     0% {
       transform: rotateZ(0);
@@ -6,15 +9,6 @@
       transform: rotateZ(360deg);
     }
 }
-@keyframes sun-animation-2 {
-    0% {
-      transform: rotateZ(0);
-    }
-    100% {
-      transform: rotateZ(-360deg);
-    }
-}
-
 .sun {
     width: 60px;
     height: 60px;
