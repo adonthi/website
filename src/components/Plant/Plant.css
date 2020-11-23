@@ -67,4 +67,6 @@
 }
 .welcome-phrase {
     text-align: right;
+    margin-right: 12%;
+    margin-top: 50px;
 }
