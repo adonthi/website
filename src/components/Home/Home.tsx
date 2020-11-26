@@ -6,7 +6,7 @@ import {
 
 function Home() {
   return (
-    <Container className="home-container">
+    <Container fluid className="home-container">
       <Row>
         <Col xs={6} lg={6} className="home-panel left-panel">
           <h1>

@@ -4,10 +4,9 @@ import styled from 'styled-components';
 import suncalc from 'suncalc';
 
 enum BackgroundColor {
-  Sunrise = '#ffca7c',
-  Morning = '#d7e8fd',
-  Midday = '#87ceeb',
-  Sunset = '#ffc922',
+  Morning = '#73aaee',
+  Midday = '#8c83f2',
+  Sunset = '#bd711c ',
   Night = '#0c1445',
 }
 
@@ -45,8 +44,6 @@ class Plant extends React.Component<{}, PlantState> {
     const now = new Date();
     if (now < sunTimes.sunrise) {
       return BackgroundColor.Night;
-    } if (now < sunTimes.sunriseEnd) {
-      return BackgroundColor.Sunrise;
     } if (now < sunTimes.solarNoon) {
       return BackgroundColor.Morning;
     } if (now < sunTimes.sunsetStart) {
@@ -73,18 +70,20 @@ class Plant extends React.Component<{}, PlantState> {
       welcomePhrase = 'Good evening.';
     }
     return (
-      <this.BodyDiv className="plant-body">
-        <h1>Plant</h1>
-        {isDay ? (
-          <div className="sun">
-            {['top', 'top-right', 'right', 'bottom-right', 'bottom', 'bottom-left', 'left', 'top-left']
-              .map((direction) => <div className={`sun-tri ${direction}`} />)}
-          </div>
-        ) : (
-          <div className="moon" />
-        )}
-        <h2 className="welcome-phrase">{welcomePhrase}</h2>
-      </this.BodyDiv>
+      <div>
+        <this.BodyDiv className="plant-body container-fluid">
+          {isDay ? (
+            <div className="sun">
+              {['top', 'top-right', 'right', 'bottom-right', 'bottom', 'bottom-left', 'left', 'top-left']
+                .map((direction) => <div className={`sun-tri ${direction}`} />)}
+            </div>
+          ) : (
+            <div className="moon" />
+          )}
+          <h1 className="welcome-phrase">{welcomePhrase}</h1>
+        </this.BodyDiv>
+        <div className="plant-ground" />
+      </div>
     );
   }
 }
