@@ -11,6 +11,7 @@ enum BackgroundColor {
 }
 
 type PlantState = {
+  produce: string;
   sunTimes: suncalc.GetTimesResult;
 };
 
@@ -22,6 +23,7 @@ class Plant extends React.Component<{}, PlantState> {
   constructor(props: any) {
     super(props);
     this.state = {
+      produce: 'Tomatoes', // TODO - pull current produce
       sunTimes: Plant.getSunTimes(),
     };
   }
@@ -55,7 +57,7 @@ class Plant extends React.Component<{}, PlantState> {
   }
 
   render() {
-    const { sunTimes } = this.state;
+    const { produce, sunTimes } = this.state;
     const now = new Date();
     const isDay = now < sunTimes.sunset;
     const isMorning = now < sunTimes.solarNoon && now > sunTimes.sunrise;
@@ -81,6 +83,11 @@ class Plant extends React.Component<{}, PlantState> {
             <div className="moon" />
           )}
           <h1 className="welcome-phrase">{welcomePhrase}</h1>
+          <h2 className="produce-phrase">
+            {produce}
+            {' '}
+            are in season.
+          </h2>
         </this.BodyDiv>
         <div className="plant-ground" />
       </div>

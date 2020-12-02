@@ -71,6 +71,10 @@
     margin-right: 50px;
     font-size: 4rem;  
 }
+.produce-phrase {
+    text-align: right;
+    margin-right: 50px;
+}
 
 .plant-ground {
     width: 100%;
