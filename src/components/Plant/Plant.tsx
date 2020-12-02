@@ -86,7 +86,7 @@ class Plant extends React.Component<{}, PlantState> {
           <h2 className="produce-phrase">
             {produce}
             {' '}
-            are in season.
+            are in season!
           </h2>
         </this.BodyDiv>
         <div className="plant-ground" />
