@@ -13,7 +13,7 @@ import Plant from './components/Plant/Plant';
 function App() {
   return (
     <div className="App">
-      <Navbar bg="dark" variant="dark">
+      <Navbar className="navbar" bg="dark" variant="dark">
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Nav className="mr-auto">
           <Nav.Link href="/">Home</Nav.Link>

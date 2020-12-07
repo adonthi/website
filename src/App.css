@@ -6,3 +6,6 @@ html body {
   color: white;
   background-color: black;
 }
+nav.navbar {
+  z-index: 999;
+}
