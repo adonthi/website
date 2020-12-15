@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './Plant.css';
 import styled from 'styled-components';
 import suncalc from 'suncalc';
 import { Button } from 'react-bootstrap';
-// import gsap from 'gsap';
-// import { FallingAnimation } from '../Physics/Animation';
+import gsap from 'gsap';
 
 enum BackgroundColor {
   Morning = '#73aaee',
@@ -12,8 +11,6 @@ enum BackgroundColor {
   Sunset = '#bd711c ',
   Night = '#0c1445',
 }
-
-// const item = useRef(null);
 
 function getSunTimes() {
   let latitude = 35.7796;
@@ -43,13 +40,16 @@ function getBackgroundColor() {
 const BodyDiv = styled.div`
 background-color: ${getBackgroundColor()}
 `;
-// useEffect() {
-//   const t1 = gsap.timeline();
-//   t1.add(FallingAnimation(item), 1);
-// }
 function Plant() {
   // eslint-disable-next-line
   const [produce, setProduce] = useState('Tomatoes');
+  const item: any = useRef(null);
+  const tl = gsap.timeline({ paused: true });
+  useEffect(() => {
+    tl.from(item.current, {
+      y: -100, ease: 'bounce.out', duration: 2,
+    }).play();
+  }, [produce, item, tl]);
   const now = new Date();
   const isDay = now < sunTimes.sunset && now > sunTimes.sunrise;
   const isMorning = now < sunTimes.solarNoon && now > sunTimes.sunrise;
@@ -81,6 +81,7 @@ function Plant() {
           are in season.
         </h2>
         <Button className="produce-button" variant="light" onClick={() => setProduce('Grapes')}>What else?</Button>
+        <div className={`animate ${produce.toLowerCase()}`} ref={item}>{produce}</div>
       </BodyDiv>
       <div className="plant-ground" />
     </div>
