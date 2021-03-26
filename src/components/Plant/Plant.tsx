@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Plant.css';
 import styled from 'styled-components';
 import suncalc from 'suncalc';
@@ -41,15 +41,16 @@ const BodyDiv = styled.div`
 background-color: ${getBackgroundColor()}
 `;
 function Plant() {
-  // eslint-disable-next-line
   const [produce, setProduce] = useState('Tomatoes');
-  const item: any = useRef(null);
-  const tl = gsap.timeline({ paused: true });
+  const stack = [[1, 2, 3], [1, 2], [1]];
   useEffect(() => {
-    tl.from(item.current, {
-      y: -100, ease: 'bounce.out', duration: 2,
-    }).play();
-  }, [produce, item, tl]);
+    const tl = gsap.timeline();
+    const t2 = gsap.timeline();
+    tl.from('.animate', {
+      y: -300, ease: 'bounce.out', duration: 1.25, stagger: 0.2,
+    });
+    t2.from('.animate', { opacity: 0, ease: 'power3', stagger: 0.18 });
+  }, [produce]);
   const now = new Date();
   const isDay = now < sunTimes.sunset && now > sunTimes.sunrise;
   const isMorning = now < sunTimes.solarNoon && now > sunTimes.sunrise;
@@ -81,9 +82,19 @@ function Plant() {
           are in season.
         </h2>
         <Button className="produce-button" variant="light" onClick={() => setProduce('Grapes')}>What else?</Button>
-        <div className={`animate ${produce.toLowerCase()}`} ref={item}>{produce}</div>
       </BodyDiv>
-      <div className="plant-ground" />
+      <div className="plant-ground">
+        {stack.map((row, idx) => (
+          <div className={`produce-row row-${idx}`}>
+            {row.map(() => (
+              <div className={`animate ${produce.toLowerCase()}`}>
+                {/* {produce} */}
+              </div>
+            ))}
+          </div>
+        ))}
+        <div className="produce-row" />
+      </div>
     </div>
   );
 }
