@@ -88,7 +88,7 @@ function Plant() {
           <div className={`produce-row row-${idx}`}>
             {row.map(() => (
               <div className={`animate ${produce.toLowerCase()}`}>
-                {/* {produce} */}
+                {/* Adds debug produce name {produce} */}
               </div>
             ))}
           </div>
